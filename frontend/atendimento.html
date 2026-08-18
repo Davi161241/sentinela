@@ -1,36 +1,136 @@
 <!DOCTYPE html>
-<html>
-<head><link rel="stylesheet" href="css/style.css"></head>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Atendimento — Sistema Hospitalar</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
 <body>
-<div class="container">
-<h2>Atendimento</h2>
 
-<input id="nome" placeholder="Nome">
-<input id="cpf" placeholder="CPF">
+    <div class="container">
 
-<select id="tipo">
-  <option>Convenio</option>
-  <option>Particular</option>
-</select>
+        <h2>🏥 Atendimento</h2>
 
-<input type="file" id="foto">
+        <input
+            type="text"
+            id="nome"
+            placeholder="Nome do paciente"
+        >
 
-<button onclick="cadastrar()">Cadastrar</button>
-</div>
+        <input
+            type="text"
+            id="cpf"
+            placeholder="CPF"
+        >
 
-<script>
-function cadastrar(){
- fetch("http://localhost:3000/atendimento",{
-  method:"POST",
-  headers:{"Content-Type":"application/json"},
-  body: JSON.stringify({
-    nome: nome.value,
-    cpf: cpf.value,
-    tipo: tipo.value
-  })
- });
- alert("Paciente enviado para triagem");
-}
-</script>
+        <select id="tipo">
+            <option value="Convenio">Convênio</option>
+            <option value="Particular">Particular</option>
+        </select>
+
+        <input
+            type="file"
+            id="foto"
+            accept="image/*"
+        >
+
+        <button onclick="cadastrar()">
+            Cadastrar
+        </button>
+
+    </div>
+
+
+    <script>
+
+        function cadastrar() {
+
+            const nome = document.getElementById("nome").value.trim();
+            const cpf = document.getElementById("cpf").value.trim();
+            const tipo = document.getElementById("tipo").value;
+
+
+            // Verifica se os campos obrigatórios foram preenchidos
+            if (!nome || !cpf) {
+
+                alert("Preencha o nome e o CPF do paciente.");
+
+                return;
+            }
+
+
+            fetch("http://localhost:3000/atendimento", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    nome: nome,
+
+                    cpf: cpf,
+
+                    tipo: tipo
+
+                })
+
+            })
+
+            .then(response => {
+
+                if (!response.ok) {
+                    throw new Error("Erro ao cadastrar paciente.");
+                }
+
+                return response.json();
+
+            })
+
+            .then(data => {
+
+                if (data.sucesso) {
+
+                    alert("Paciente enviado para triagem!");
+
+                    // Limpa os campos depois do cadastro
+                    document.getElementById("nome").value = "";
+                    document.getElementById("cpf").value = "";
+                    document.getElementById("tipo").value = "Convenio";
+                    document.getElementById("foto").value = "";
+
+                } else {
+
+                    alert(
+                        data.erro ||
+                        "Não foi possível cadastrar o paciente."
+                    );
+
+                }
+
+            })
+
+            .catch(erro => {
+
+                console.error("Erro:", erro);
+
+                alert(
+                    "Não foi possível conectar ao servidor."
+                );
+
+            });
+
+        }
+
+    </script>
+
 </body>
+
 </html>
