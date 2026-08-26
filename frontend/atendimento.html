@@ -16,7 +16,9 @@
 
         <h2>🏥 Atendimento</h2>
 
-        <!-- Dados pessoais -->
+        <!-- =========================
+             DADOS PESSOAIS
+        ========================== -->
 
         <input
             type="text"
@@ -65,7 +67,9 @@
         </select>
 
 
-        <!-- Endereço -->
+        <!-- =========================
+             ENDEREÇO
+        ========================== -->
 
         <input
             type="text"
@@ -74,7 +78,9 @@
         >
 
 
-        <!-- Contato -->
+        <!-- =========================
+             CONTATO
+        ========================== -->
 
         <input
             type="tel"
@@ -95,15 +101,26 @@
         >
 
 
-        <!-- Tipo de atendimento -->
+        <!-- =========================
+             TIPO DE ATENDIMENTO
+        ========================== -->
 
         <select id="tipo">
-            <option value="Convenio">Convênio</option>
-            <option value="Particular">Particular</option>
+
+            <option value="Convenio">
+                Convênio
+            </option>
+
+            <option value="Particular">
+                Particular
+            </option>
+
         </select>
 
 
-        <!-- Foto -->
+        <!-- =========================
+             FOTO
+        ========================== -->
 
         <input
             type="file"
@@ -112,7 +129,15 @@
         >
 
 
-        <button onclick="cadastrar()">
+        <!-- =========================
+             BOTÃO
+        ========================== -->
+
+        <button
+            type="button"
+            id="btnCadastrar"
+            onclick="cadastrar()"
+        >
             Cadastrar
         </button>
 
@@ -121,15 +146,26 @@
 
     <script>
 
-        function cadastrar() {
+        async function cadastrar() {
 
-            const nome = document.getElementById("nome").value.trim();
-            const cpf = document.getElementById("cpf").value.trim();
-            const rg = document.getElementById("rg").value.trim();
+            // =========================
+            // PEGAR DADOS
+            // =========================
+
+            const nome =
+                document.getElementById("nome").value.trim();
+
+            const cpf =
+                document.getElementById("cpf").value.trim();
+
+            const rg =
+                document.getElementById("rg").value.trim();
+
             const dataNascimento =
                 document.getElementById("dataNascimento").value;
 
-            const sexo = document.getElementById("sexo").value;
+            const sexo =
+                document.getElementById("sexo").value;
 
             const nomeMae =
                 document.getElementById("nomeMae").value.trim();
@@ -147,13 +183,18 @@
                 document.getElementById("email").value.trim();
 
             const contatoEmergencia =
-                document.getElementById("contatoEmergencia").value.trim();
+                document
+                    .getElementById("contatoEmergencia")
+                    .value
+                    .trim();
 
             const tipo =
                 document.getElementById("tipo").value;
 
 
-            // Campos obrigatórios
+            // =========================
+            // VALIDAÇÃO
+            // =========================
 
             if (
                 !nome ||
@@ -169,103 +210,189 @@
                 !contatoEmergencia
             ) {
 
-                alert("Preencha todos os campos obrigatórios.");
+                alert(
+                    "Preencha todos os campos obrigatórios."
+                );
 
                 return;
             }
 
 
-            fetch("http://localhost:3000/atendimento", {
+            // =========================
+            // DESABILITAR BOTÃO
+            // =========================
 
-                method: "POST",
+            const botao =
+                document.getElementById("btnCadastrar");
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
+            botao.disabled = true;
 
-                body: JSON.stringify({
+            botao.textContent = "Cadastrando...";
 
-                    nome: nome,
 
-                    cpf: cpf,
+            // =========================
+            // DADOS ENVIADOS
+            // =========================
 
-                    rg: rg,
+            const paciente = {
 
-                    dataNascimento: dataNascimento,
+                nome: nome,
 
-                    sexo: sexo,
+                cpf: cpf,
 
-                    nomeMae: nomeMae,
+                rg: rg,
 
-                    estadoCivil: estadoCivil,
+                dataNascimento: dataNascimento,
 
-                    endereco: endereco,
+                sexo: sexo,
 
-                    telefone: telefone,
+                nomeMae: nomeMae,
 
-                    email: email,
+                estadoCivil: estadoCivil,
 
-                    contatoEmergencia: contatoEmergencia,
+                endereco: endereco,
 
-                    tipo: tipo
+                telefone: telefone,
 
-                })
+                email: email,
 
-            })
+                contatoEmergencia: contatoEmergencia,
 
-            .then(response => {
+                tipo: tipo
+
+            };
+
+
+            // =========================
+            // ENVIAR PARA O BACKEND
+            // =========================
+
+            try {
+
+                const response = await fetch(
+                    "/atendimento",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify(paciente)
+                    }
+                );
+
+
+                // =========================
+                // LER RESPOSTA
+                // =========================
+
+                const data =
+                    await response.json();
+
+
+                // =========================
+                // VERIFICAR ERRO
+                // =========================
 
                 if (!response.ok) {
-                    throw new Error("Erro ao cadastrar paciente.");
-                }
 
-                return response.json();
-
-            })
-
-            .then(data => {
-
-                if (data.sucesso) {
-
-                    alert("Paciente enviado para triagem!");
-
-
-                    // Limpa todos os campos
-
-                    document.getElementById("nome").value = "";
-                    document.getElementById("cpf").value = "";
-                    document.getElementById("rg").value = "";
-                    document.getElementById("dataNascimento").value = "";
-                    document.getElementById("sexo").value = "";
-                    document.getElementById("nomeMae").value = "";
-                    document.getElementById("estadoCivil").value = "";
-                    document.getElementById("endereco").value = "";
-                    document.getElementById("telefone").value = "";
-                    document.getElementById("email").value = "";
-                    document.getElementById("contatoEmergencia").value = "";
-                    document.getElementById("tipo").value = "Convenio";
-                    document.getElementById("foto").value = "";
-
-                } else {
-
-                    alert(
+                    throw new Error(
                         data.erro ||
-                        "Não foi possível cadastrar o paciente."
+                        "Erro ao cadastrar paciente."
                     );
 
                 }
 
-            })
 
-            .catch(erro => {
+                // =========================
+                // SUCESSO
+                // =========================
 
-                console.error("Erro:", erro);
-
-                alert(
-                    "Não foi possível conectar ao servidor."
+                console.log(
+                    "Paciente cadastrado:",
+                    data
                 );
 
-            });
+                alert(
+                    "Paciente enviado para triagem!"
+                );
+
+
+                // =========================
+                // LIMPAR FORMULÁRIO
+                // =========================
+
+                document.getElementById("nome").value = "";
+
+                document.getElementById("cpf").value = "";
+
+                document.getElementById("rg").value = "";
+
+                document.getElementById(
+                    "dataNascimento"
+                ).value = "";
+
+                document.getElementById(
+                    "sexo"
+                ).value = "";
+
+                document.getElementById(
+                    "nomeMae"
+                ).value = "";
+
+                document.getElementById(
+                    "estadoCivil"
+                ).value = "";
+
+                document.getElementById(
+                    "endereco"
+                ).value = "";
+
+                document.getElementById(
+                    "telefone"
+                ).value = "";
+
+                document.getElementById(
+                    "email"
+                ).value = "";
+
+                document.getElementById(
+                    "contatoEmergencia"
+                ).value = "";
+
+                document.getElementById(
+                    "tipo"
+                ).value = "Convenio";
+
+                document.getElementById(
+                    "foto"
+                ).value = "";
+
+
+            } catch (erro) {
+
+                console.error(
+                    "Erro ao cadastrar paciente:",
+                    erro
+                );
+
+                alert(
+                    "Não foi possível cadastrar o paciente.\n\n" +
+                    erro.message
+                );
+
+            } finally {
+
+                // =========================
+                // REATIVAR BOTÃO
+                // =========================
+
+                botao.disabled = false;
+
+                botao.textContent = "Cadastrar";
+
+            }
 
         }
 
