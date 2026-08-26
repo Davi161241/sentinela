@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -16,10 +17,12 @@
 
         <h2>🏥 Atendimento</h2>
 
+        <!-- Dados pessoais -->
+
         <input
             type="text"
             id="nome"
-            placeholder="Nome do paciente"
+            placeholder="Nome completo"
         >
 
         <input
@@ -28,16 +31,87 @@
             placeholder="CPF"
         >
 
+        <input
+            type="text"
+            id="rg"
+            placeholder="RG"
+        >
+
+        <input
+            type="date"
+            id="dataNascimento"
+        >
+
+        <select id="sexo">
+            <option value="">Selecione o sexo</option>
+            <option value="Masculino">Masculino</option>
+            <option value="Feminino">Feminino</option>
+            <option value="Outro">Outro</option>
+            <option value="Nao informado">Prefiro não informar</option>
+        </select>
+
+        <input
+            type="text"
+            id="nomeMae"
+            placeholder="Nome da mãe"
+        >
+
+        <select id="estadoCivil">
+            <option value="">Estado civil</option>
+            <option value="Solteiro">Solteiro(a)</option>
+            <option value="Casado">Casado(a)</option>
+            <option value="Divorciado">Divorciado(a)</option>
+            <option value="Viuvo">Viúvo(a)</option>
+            <option value="Uniao estavel">União estável</option>
+        </select>
+
+
+        <!-- Endereço -->
+
+        <input
+            type="text"
+            id="endereco"
+            placeholder="Endereço completo"
+        >
+
+
+        <!-- Contato -->
+
+        <input
+            type="tel"
+            id="telefone"
+            placeholder="Telefone"
+        >
+
+        <input
+            type="email"
+            id="email"
+            placeholder="E-mail"
+        >
+
+        <input
+            type="tel"
+            id="contatoEmergencia"
+            placeholder="Contato de emergência"
+        >
+
+
+        <!-- Tipo de atendimento -->
+
         <select id="tipo">
             <option value="Convenio">Convênio</option>
             <option value="Particular">Particular</option>
         </select>
+
+
+        <!-- Foto -->
 
         <input
             type="file"
             id="foto"
             accept="image/*"
         >
+
 
         <button onclick="cadastrar()">
             Cadastrar
@@ -52,13 +126,51 @@
 
             const nome = document.getElementById("nome").value.trim();
             const cpf = document.getElementById("cpf").value.trim();
-            const tipo = document.getElementById("tipo").value;
+            const rg = document.getElementById("rg").value.trim();
+            const dataNascimento =
+                document.getElementById("dataNascimento").value;
+
+            const sexo = document.getElementById("sexo").value;
+
+            const nomeMae =
+                document.getElementById("nomeMae").value.trim();
+
+            const estadoCivil =
+                document.getElementById("estadoCivil").value;
+
+            const endereco =
+                document.getElementById("endereco").value.trim();
+
+            const telefone =
+                document.getElementById("telefone").value.trim();
+
+            const email =
+                document.getElementById("email").value.trim();
+
+            const contatoEmergencia =
+                document.getElementById("contatoEmergencia").value.trim();
+
+            const tipo =
+                document.getElementById("tipo").value;
 
 
-            // Verifica se os campos obrigatórios foram preenchidos
-            if (!nome || !cpf) {
+            // Campos obrigatórios
 
-                alert("Preencha o nome e o CPF do paciente.");
+            if (
+                !nome ||
+                !cpf ||
+                !rg ||
+                !dataNascimento ||
+                !sexo ||
+                !nomeMae ||
+                !estadoCivil ||
+                !endereco ||
+                !telefone ||
+                !email ||
+                !contatoEmergencia
+            ) {
+
+                alert("Preencha todos os campos obrigatórios.");
 
                 return;
             }
@@ -77,6 +189,24 @@
                     nome: nome,
 
                     cpf: cpf,
+
+                    rg: rg,
+
+                    dataNascimento: dataNascimento,
+
+                    sexo: sexo,
+
+                    nomeMae: nomeMae,
+
+                    estadoCivil: estadoCivil,
+
+                    endereco: endereco,
+
+                    telefone: telefone,
+
+                    email: email,
+
+                    contatoEmergencia: contatoEmergencia,
 
                     tipo: tipo
 
@@ -100,9 +230,20 @@
 
                     alert("Paciente enviado para triagem!");
 
-                    // Limpa os campos depois do cadastro
+
+                    // Limpa todos os campos
+
                     document.getElementById("nome").value = "";
                     document.getElementById("cpf").value = "";
+                    document.getElementById("rg").value = "";
+                    document.getElementById("dataNascimento").value = "";
+                    document.getElementById("sexo").value = "";
+                    document.getElementById("nomeMae").value = "";
+                    document.getElementById("estadoCivil").value = "";
+                    document.getElementById("endereco").value = "";
+                    document.getElementById("telefone").value = "";
+                    document.getElementById("email").value = "";
+                    document.getElementById("contatoEmergencia").value = "";
                     document.getElementById("tipo").value = "Convenio";
                     document.getElementById("foto").value = "";
 
@@ -134,3 +275,4 @@
 </body>
 
 </html>
+```
