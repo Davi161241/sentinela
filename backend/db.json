@@ -2,17 +2,17 @@
   "usuarios": [
     {
       "usuario": "triagem",
-      "senha": "123",
+      "senha": "1234",
       "tipo": "triagem"
     },
     {
       "usuario": "medico",
-      "senha": "123",
+      "senha": "1234",
       "tipo": "medico"
     },
     {
       "usuario": "atendimento",
-      "senha": "123",
+      "senha": "1234",
       "tipo": "atendimento"
     }
   ],
