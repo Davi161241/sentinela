@@ -1,402 +1,467 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Atendimento — Sistema Hospitalar</title>
+```
+<title>Atendimento — Sistema Hospitalar</title>
 
-    <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style.css">
+```
+
 </head>
 
 <body>
 
-    <div class="container">
-
-        <h2>🏥 Atendimento</h2>
-
-        <!-- =========================
-             DADOS PESSOAIS
-        ========================== -->
-
-        <input
-            type="text"
-            id="nome"
-            placeholder="Nome completo"
-        >
-
-        <input
-            type="text"
-            id="cpf"
-            placeholder="CPF"
-        >
-
-        <input
-            type="text"
-            id="rg"
-            placeholder="RG"
-        >
-
-        <input
-            type="date"
-            id="dataNascimento"
-        >
-
-        <select id="sexo">
-            <option value="">Selecione o sexo</option>
-            <option value="Masculino">Masculino</option>
-            <option value="Feminino">Feminino</option>
-            <option value="Outro">Outro</option>
-            <option value="Nao informado">Prefiro não informar</option>
-        </select>
-
-        <input
-            type="text"
-            id="nomeMae"
-            placeholder="Nome da mãe"
-        >
+```
+<div class="container">
+
+    <h2>🏥 Atendimento</h2>
+
+    <!-- =========================
+         DADOS PESSOAIS
+    ========================== -->
+
+    <input
+        type="text"
+        id="nome"
+        placeholder="Nome completo"
+    >
+
+    <input
+        type="text"
+        id="cpf"
+        placeholder="CPF"
+    >
+
+    <input
+        type="text"
+        id="rg"
+        placeholder="RG"
+    >
+
+    <input
+        type="date"
+        id="dataNascimento"
+    >
+
+    <select id="sexo">
+        <option value="">Selecione o sexo</option>
+        <option value="Masculino">Masculino</option>
+        <option value="Feminino">Feminino</option>
+        <option value="Outro">Outro</option>
+        <option value="Nao informado">Prefiro não informar</option>
+    </select>
+
+    <input
+        type="text"
+        id="nomeMae"
+        placeholder="Nome da mãe"
+    >
+
+    <select id="estadoCivil">
+        <option value="">Estado civil</option>
+        <option value="Solteiro">Solteiro(a)</option>
+        <option value="Casado">Casado(a)</option>
+        <option value="Divorciado">Divorciado(a)</option>
+        <option value="Viuvo">Viúvo(a)</option>
+        <option value="Uniao estavel">União estável</option>
+    </select>
 
-        <select id="estadoCivil">
-            <option value="">Estado civil</option>
-            <option value="Solteiro">Solteiro(a)</option>
-            <option value="Casado">Casado(a)</option>
-            <option value="Divorciado">Divorciado(a)</option>
-            <option value="Viuvo">Viúvo(a)</option>
-            <option value="Uniao estavel">União estável</option>
-        </select>
 
+    <!-- =========================
+         ENDEREÇO
+    ========================== -->
 
-        <!-- =========================
-             ENDEREÇO
-        ========================== -->
+    <input
+        type="text"
+        id="endereco"
+        placeholder="Endereço completo"
+    >
 
-        <input
-            type="text"
-            id="endereco"
-            placeholder="Endereço completo"
-        >
 
+    <!-- =========================
+         CONTATO
+    ========================== -->
 
-        <!-- =========================
-             CONTATO
-        ========================== -->
+    <input
+        type="tel"
+        id="telefone"
+        placeholder="Telefone"
+    >
 
-        <input
-            type="tel"
-            id="telefone"
-            placeholder="Telefone"
-        >
+    <input
+        type="email"
+        id="email"
+        placeholder="E-mail"
+    >
 
-        <input
-            type="email"
-            id="email"
-            placeholder="E-mail"
-        >
+    <input
+        type="tel"
+        id="contatoEmergencia"
+        placeholder="Contato de emergência"
+    >
 
-        <input
-            type="tel"
-            id="contatoEmergencia"
-            placeholder="Contato de emergência"
-        >
 
+    <!-- =========================
+         TIPO DE ATENDIMENTO
+    ========================== -->
 
-        <!-- =========================
-             TIPO DE ATENDIMENTO
-        ========================== -->
+    <select id="tipo">
 
-        <select id="tipo">
+        <option value="Convenio">
+            Convênio
+        </option>
 
-            <option value="Convenio">
-                Convênio
-            </option>
+        <option value="Particular">
+            Particular
+        </option>
 
-            <option value="Particular">
-                Particular
-            </option>
+    </select>
 
-        </select>
 
+    <!-- =========================
+         FOTO
+    ========================== -->
 
-        <!-- =========================
-             FOTO
-        ========================== -->
+    <input
+        type="file"
+        id="foto"
+        accept="image/*"
+    >
 
-        <input
-            type="file"
-            id="foto"
-            accept="image/*"
-        >
 
+    <!-- =========================
+         BOTÃO
+    ========================== -->
 
-        <!-- =========================
-             BOTÃO
-        ========================== -->
+    <button
+        type="button"
+        id="btnCadastrar"
+        onclick="cadastrar()"
+    >
+        Cadastrar
+    </button>
 
-        <button
-            type="button"
-            id="btnCadastrar"
-            onclick="cadastrar()"
-        >
-            Cadastrar
-        </button>
+</div>
 
-    </div>
 
+<script>
 
-    <script>
+    async function cadastrar() {
 
-        async function cadastrar() {
+        // =========================
+        // PEGAR DADOS
+        // =========================
 
-            // =========================
-            // PEGAR DADOS
-            // =========================
+        const nome =
+            document.getElementById("nome").value.trim();
 
-            const nome =
-                document.getElementById("nome").value.trim();
+        const cpf =
+            document.getElementById("cpf").value.trim();
 
-            const cpf =
-                document.getElementById("cpf").value.trim();
+        const rg =
+            document.getElementById("rg").value.trim();
 
-            const rg =
-                document.getElementById("rg").value.trim();
+        const dataNascimento =
+            document.getElementById("dataNascimento").value;
 
-            const dataNascimento =
-                document.getElementById("dataNascimento").value;
+        const sexo =
+            document.getElementById("sexo").value;
 
-            const sexo =
-                document.getElementById("sexo").value;
+        const nomeMae =
+            document.getElementById("nomeMae").value.trim();
 
-            const nomeMae =
-                document.getElementById("nomeMae").value.trim();
+        const estadoCivil =
+            document.getElementById("estadoCivil").value;
 
-            const estadoCivil =
-                document.getElementById("estadoCivil").value;
+        const endereco =
+            document.getElementById("endereco").value.trim();
 
-            const endereco =
-                document.getElementById("endereco").value.trim();
+        const telefone =
+            document.getElementById("telefone").value.trim();
 
-            const telefone =
-                document.getElementById("telefone").value.trim();
+        const email =
+            document.getElementById("email").value.trim();
 
-            const email =
-                document.getElementById("email").value.trim();
+        const contatoEmergencia =
+            document
+                .getElementById("contatoEmergencia")
+                .value
+                .trim();
 
-            const contatoEmergencia =
-                document
-                    .getElementById("contatoEmergencia")
-                    .value
-                    .trim();
+        const tipo =
+            document.getElementById("tipo").value;
 
-            const tipo =
-                document.getElementById("tipo").value;
+        const fotoInput =
+            document.getElementById("foto");
 
+        const foto =
+            fotoInput.files[0];
 
-            // =========================
-            // VALIDAÇÃO
-            // =========================
 
-            if (
-                !nome ||
-                !cpf ||
-                !rg ||
-                !dataNascimento ||
-                !sexo ||
-                !nomeMae ||
-                !estadoCivil ||
-                !endereco ||
-                !telefone ||
-                !email ||
-                !contatoEmergencia
-            ) {
+        // =========================
+        // VALIDAÇÃO
+        // =========================
 
-                alert(
-                    "Preencha todos os campos obrigatórios."
-                );
+        if (
+            !nome ||
+            !cpf ||
+            !rg ||
+            !dataNascimento ||
+            !sexo ||
+            !nomeMae ||
+            !estadoCivil ||
+            !endereco ||
+            !telefone ||
+            !email ||
+            !contatoEmergencia
+        ) {
 
-                return;
-            }
+            alert(
+                "Preencha todos os campos obrigatórios."
+            );
 
+            return;
+        }
 
-            // =========================
-            // DESABILITAR BOTÃO
-            // =========================
 
-            const botao =
-                document.getElementById("btnCadastrar");
+        // =========================
+        // DESABILITAR BOTÃO
+        // =========================
 
-            botao.disabled = true;
+        const botao =
+            document.getElementById("btnCadastrar");
 
-            botao.textContent = "Cadastrando...";
+        botao.disabled = true;
 
+        botao.textContent =
+            "Cadastrando...";
 
-            // =========================
-            // DADOS ENVIADOS
-            // =========================
 
-            const paciente = {
+        // =========================
+        // CRIAR FORMDATA
+        // =========================
 
-                nome: nome,
+        const formData =
+            new FormData();
 
-                cpf: cpf,
+        formData.append(
+            "nome",
+            nome
+        );
 
-                rg: rg,
+        formData.append(
+            "cpf",
+            cpf
+        );
 
-                dataNascimento: dataNascimento,
+        formData.append(
+            "rg",
+            rg
+        );
 
-                sexo: sexo,
+        formData.append(
+            "dataNascimento",
+            dataNascimento
+        );
 
-                nomeMae: nomeMae,
+        formData.append(
+            "sexo",
+            sexo
+        );
 
-                estadoCivil: estadoCivil,
+        formData.append(
+            "nomeMae",
+            nomeMae
+        );
 
-                endereco: endereco,
+        formData.append(
+            "estadoCivil",
+            estadoCivil
+        );
 
-                telefone: telefone,
+        formData.append(
+            "endereco",
+            endereco
+        );
 
-                email: email,
+        formData.append(
+            "telefone",
+            telefone
+        );
 
-                contatoEmergencia: contatoEmergencia,
+        formData.append(
+            "email",
+            email
+        );
 
-                tipo: tipo
+        formData.append(
+            "contatoEmergencia",
+            contatoEmergencia
+        );
 
-            };
+        formData.append(
+            "tipo",
+            tipo
+        );
 
 
-            // =========================
-            // ENVIAR PARA O BACKEND
-            // =========================
+        // =========================
+        // ADICIONAR FOTO
+        // =========================
 
-            try {
+        if (foto) {
 
-                const response = await fetch(
+            formData.append(
+                "foto",
+                foto
+            );
+
+        }
+
+
+        // =========================
+        // ENVIAR PARA O BACKEND
+        // =========================
+
+        try {
+
+            const response =
+                await fetch(
                     "/atendimento",
                     {
                         method: "POST",
-
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-
-                        body: JSON.stringify(paciente)
+                        body: formData
                     }
                 );
 
 
-                // =========================
-                // LER RESPOSTA
-                // =========================
+            // =========================
+            // LER RESPOSTA
+            // =========================
 
-                const data =
-                    await response.json();
-
-
-                // =========================
-                // VERIFICAR ERRO
-                // =========================
-
-                if (!response.ok) {
-
-                    throw new Error(
-                        data.erro ||
-                        "Erro ao cadastrar paciente."
-                    );
-
-                }
+            const data =
+                await response.json();
 
 
-                // =========================
-                // SUCESSO
-                // =========================
+            // =========================
+            // VERIFICAR ERRO
+            // =========================
 
-                console.log(
-                    "Paciente cadastrado:",
-                    data
+            if (!response.ok) {
+
+                throw new Error(
+                    data.erro ||
+                    "Erro ao cadastrar paciente."
                 );
-
-                alert(
-                    "Paciente enviado para triagem!"
-                );
-
-
-                // =========================
-                // LIMPAR FORMULÁRIO
-                // =========================
-
-                document.getElementById("nome").value = "";
-
-                document.getElementById("cpf").value = "";
-
-                document.getElementById("rg").value = "";
-
-                document.getElementById(
-                    "dataNascimento"
-                ).value = "";
-
-                document.getElementById(
-                    "sexo"
-                ).value = "";
-
-                document.getElementById(
-                    "nomeMae"
-                ).value = "";
-
-                document.getElementById(
-                    "estadoCivil"
-                ).value = "";
-
-                document.getElementById(
-                    "endereco"
-                ).value = "";
-
-                document.getElementById(
-                    "telefone"
-                ).value = "";
-
-                document.getElementById(
-                    "email"
-                ).value = "";
-
-                document.getElementById(
-                    "contatoEmergencia"
-                ).value = "";
-
-                document.getElementById(
-                    "tipo"
-                ).value = "Convenio";
-
-                document.getElementById(
-                    "foto"
-                ).value = "";
-
-
-            } catch (erro) {
-
-                console.error(
-                    "Erro ao cadastrar paciente:",
-                    erro
-                );
-
-                alert(
-                    "Não foi possível cadastrar o paciente.\n\n" +
-                    erro.message
-                );
-
-            } finally {
-
-                // =========================
-                // REATIVAR BOTÃO
-                // =========================
-
-                botao.disabled = false;
-
-                botao.textContent = "Cadastrar";
 
             }
 
+
+            // =========================
+            // SUCESSO
+            // =========================
+
+            console.log(
+                "Paciente cadastrado:",
+                data
+            );
+
+            alert(
+                "Paciente enviado para triagem!"
+            );
+
+
+            // =========================
+            // LIMPAR FORMULÁRIO
+            // =========================
+
+            document.getElementById(
+                "nome"
+            ).value = "";
+
+            document.getElementById(
+                "cpf"
+            ).value = "";
+
+            document.getElementById(
+                "rg"
+            ).value = "";
+
+            document.getElementById(
+                "dataNascimento"
+            ).value = "";
+
+            document.getElementById(
+                "sexo"
+            ).value = "";
+
+            document.getElementById(
+                "nomeMae"
+            ).value = "";
+
+            document.getElementById(
+                "estadoCivil"
+            ).value = "";
+
+            document.getElementById(
+                "endereco"
+            ).value = "";
+
+            document.getElementById(
+                "telefone"
+            ).value = "";
+
+            document.getElementById(
+                "email"
+            ).value = "";
+
+            document.getElementById(
+                "contatoEmergencia"
+            ).value = "";
+
+            document.getElementById(
+                "tipo"
+            ).value = "Convenio";
+
+            document.getElementById(
+                "foto"
+            ).value = "";
+
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao cadastrar paciente:",
+                erro
+            );
+
+            alert(
+                "Não foi possível cadastrar o paciente.\n\n" +
+                erro.message
+            );
+
+        } finally {
+
+            // =========================
+            // REATIVAR BOTÃO
+            // =========================
+
+            botao.disabled = false;
+
+            botao.textContent =
+                "Cadastrar";
+
         }
 
-    </script>
+    }
+
+</script>
+```
 
 </body>
 
